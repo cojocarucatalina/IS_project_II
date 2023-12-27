@@ -1,19 +1,46 @@
 package org.launchcode.hellospring.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.util.Objects;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-public class Event {
+@Entity
+public class Event extends AbstractEntity{
 
-    private int id;
-    private static int nextId = 1;
+    private EventCategory eventCategory;
+
+    @NotBlank
+    @Size(min = 3, max =50)
     private String name;
+
+    @Size(max = 500, message = "Description too long!")
     private String description;
 
-    public Event(String name, String description) {
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    @NotBlank
+    @Email(message = "Invalid email. Try again.")
+    private String contactEmail;
+
+    public Event(){}
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public Event(String name, String description, EventCategory eventCategory, String contactEmail) {
         this.name = name;
         this.description = description;
-        this.id = nextId;
-        nextId++;
+        this.contactEmail = contactEmail;
+        this.eventCategory = eventCategory;
 
     }
     public String getName() {
@@ -37,20 +64,9 @@ public class Event {
         this.description = description;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return id == event.id;
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 
-    public int getId() {
-        return id;
+    public void setType(EventCategory eventCategory) {
+        this.eventCategory = eventCategory;
     }
 }
