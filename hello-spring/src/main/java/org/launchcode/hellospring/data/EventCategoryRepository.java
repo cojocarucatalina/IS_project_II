@@ -1,4 +1,8 @@
 package org.launchcode.hellospring.data;
 
-public interface EventCategoryRepository {
+import org.launchcode.hellospring.models.EventCategory;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+public interface EventCategoryRepository extends CrudRepository<EventCategory, Integer> {
 }
